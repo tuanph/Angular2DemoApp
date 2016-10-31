@@ -1,1 +1,50 @@
-POSTS
+<h1>Posts</h1>
+<div class="row">
+	<div class="col-md-6">
+         <select class="form-control" (change)="reloadPosts({ userId: u.value })" #u>
+              <option value="">Select a user...</option>
+              <option *ngFor="#user of users" value="{{ user.id }}">
+                  {{ user.name }}
+              </option>
+          </select>
+		<spinner [visible]="isLoadingPosts"></spinner>
+        <pagination [items]="posts" [page-size]="pageSize"  (page-changed)="onPageChanged($event)"> </pagination>
+		<ul class="list-group">
+			<li *ngFor="#post of pagedPosts" 
+                 class="list-group-item" 
+                 [class.active]="currentPost == post" 
+                 (click)="selectPost(post)"
+             >
+				{{ post.title }}
+			</li>
+		</ul>
+	</div>
+
+	<div class="col-md-6">
+		<div *ngIf="currentPost" class="panel panel-default">
+           
+			<div class="panel-heading">
+				<h3 class="panel-title">{{ currentPost.title }}</h3>
+			</div>
+			<div class="panel-body">
+                <spinner [visible]="isLoadingComments"></spinner>
+				<p>{{ currentPost.body }}</p>
+                 <hr/>
+                 <div class="media" *ngFor="#comment of currentPost.comments">
+                      <div class="media-left">
+                          <a href="#">
+                              <img class="media-object thumbnail" src="https://unsplash.it/80/80/?random={{comment.id}}" alt="...">
+                          </a>
+                      </div>
+                      <div class="media-body">
+                          <h4 class="media-heading">
+                              {{ comment.name }}
+                          </h4> 
+                          {{ comment.body }}
+                      </div>
+                  </div>
+			</div>
+		</div>
+	</div>
+
+</div>
