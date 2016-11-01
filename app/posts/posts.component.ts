@@ -1,4 +1,4 @@
-import { Component, OnInit } from "angular2/core";
+import { Component, OnInit } from "@angular/core";
 import { PostsService } from './posts.service';
 import { SpinnerComponent } from "../share/ui/spinner.component";
 import { UsersService } from "../users/users.service";
